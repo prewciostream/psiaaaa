@@ -1,0 +1,297 @@
+#-------------------------------------------------------------------------------------------------------------------#
+
+#							  MyCommand Commands config file (last update v5.5.2)									#
+
+#																													#
+
+#  BukkitDev Help page : https://dev.bukkit.org/projects/mycommand/pages/getstarted    								#
+
+#																													#
+
+#	How to make a command :	(See an example command below)															#
+
+#		First, decide your command name placing it in the first row (no duplicates!)  "mycommand:"					#
+
+#		Now set the "command:" field. This will trigger the command. Don't forget the '/' before your command.		#
+
+#		So, now select your command type from a predefined list putting it after "type" line						#
+
+#	COMMAND TYPE LIST :																								#
+
+#		TEXT , BROADCAST_TEXT, RAW_TEXT , BROADCAST_RAW_TEXT, ALIAS , RUN_COMMAND , RUN_CONSOLE , RUN_COMMAND_TASK  #
+
+#       RUN_COMMAND_RANDOM , RUN_CONSOLE_RANDOM , RUN_AS_OPERATOR , ADD_PERMISSION , ADD_COST , WARMUP , COOLDOWN   #
+
+#       WARMUP_AND_COOLDOWN , BLOCK_PATTERN ,  BAR_API_TEXT , BAR_API_BROADCAST_TEXT , CALL_URL , EXP_BAR			#
+
+#       ICON_MENU , MERCHANT , SCOREBOARD , BUNGEE_TP , TITLE, BROADCAST_TITLE , ACTION_BAR , BROADCAST_ACTION_BAR	#
+
+#		HOLOGRAPHIC_TEXT , BROADCAST_HOLOGRAPHIC_TEXT , LIVE_CHAT 													#
+
+#																													#
+
+#	If your command is "TEXT" type, you can put multiple line of text below this parameter							#
+
+#	You can do the same thing with the "RUN_COMMAND" type, but instead of text, puts commands in this list			#
+
+#	For delayed command(s) add $delay$ before the command in runcmd Example : - $delay$/list						#
+
+#	Set delay time with delaytimer: 5 (5 = seconds) | 																#
+
+#   If you are using the Vault plugin, you can put the "cost: 123.0" with this line. 								#
+
+#	You can customize your permission node by placing "permission-node:" field in a command							#
+
+#	Change the permission error message with "permission-error:" or create a command without permission required	#
+
+#   with "permission-required: false". Custom error-message for invalid args, use "error-message:"					#
+
+#   You can use itemcost : 'ID:AMOUNT' for set a cost with items. 													#
+
+#   Register REAL commands putting "register: true" below the command. Those are recognized from other plugins.    	#
+
+#   With register commands you can use the "tab_completer: - Hi - Hello!"											#
+
+#   For Scripts and more features, find more on the bukkitdev page													#
+
+#-------------------------------------------------------------------------------------------------------------------#
+
+zycie_daj:
+
+  command: /dajzycie
+
+  type: RUN_COMMAND
+  runcmd:
+  - /lifemc give $arg1 $arg2
+
+  permission-node: pm.dajzycie
+  require_all_arguments: false
+  cooldown: 15
+
+zycie_sprawdz:
+
+  command: /sprawdzzycia
+
+  type: ALIAS
+  alias: /lifemc check
+
+  permission-node: pm.sprawdzzycia
+  cooldown: 15
+
+zycie_kup:
+
+  command: /kupzycia
+
+  type: RUN_COMMAND
+  runcmd:
+  - /lifemc buy $arg1
+
+  permission-node: pm.kupzycia
+  require_all_arguments: false
+  cooldown: 15
+
+zycie_cena:
+
+  command: /kosztzycia
+  type: RUN_COMMAND
+  runcmd:
+  - /lifemc cost
+
+  permission-node: pm.kosztzycia
+
+zycia:
+  command: /zycia
+  type: TEXT
+  text:
+  - '&c========================&aŻYCIA&c========================'
+  - '&e/dajzycie <osoba> <ilość> &a- Daje życie danej osobie'
+  - '&e/sprawdzzycia <osoba> &a- Sprawdza ile żyć ma dana osoba'
+  - '&e/kupzycia <ilość> &a- Kup życia'
+  - '&e/kosztzycia &a- Sprawdza cenę życia'
+  permission-node: pm.zycia
+  cooldown: 15
+  
+banknoty:
+  command: /banknot
+  type: TEXT
+  text:
+  - '&c========================&aBANKNOTY&c========================'
+  - '&e/wyplac <ilość> &a- Wypłaca pieniądze na banknot'
+  - '&e/wplac &a- Wpłaca pieniądze na konto'
+  - '&e/podaruj <osoba> <ilość> &a- Daje osobie banknot'
+  permission-node: pm.banknot
+  cooldown: 15
+  
+banknot_wplac:
+
+  command: /wplac
+  type: RUN_COMMAND
+  runcmd:
+  - /banknotes:deposit
+
+  permission-node: pm.wplac
+  cooldown: 15
+  
+banknot_wyplac:
+
+  command: /wyplac
+  type: RUN_COMMAND
+  runcmd:
+  - /banknotes:withdraw $arg1
+
+  permission-node: pm.wyplac
+  
+  require_all_arguments: false
+  cooldown: 15
+  
+banknot_podaruj:
+
+  command: /podaruj
+  type: RUN_COMMAND
+  runcmd:
+  - /banknotes give $arg1 $arg2
+
+  permission-node: pm.podaruj
+  
+  require_all_arguments: false
+  cooldown: 15
+  
+czerwoni:
+
+  command: /dodajczerwoni
+  type: RUN_COMMAND
+  runcmd:
+   - /team join Czerwoni $arg1
+   - /lp user $arg1 parent set czerwoni
+   - /title @a subtitle ["",{"text":"Witaj ","color":"red"},{"text":"$arg1 ","color":"gold"},{"text":"w drużynie czerwonej!","color":"red"}]
+   - /title @a title ["",{"text":"CZERWONI","color":"red"}]
+  
+  permission-required: true
+  
+  require_all_arguments: true
+  cooldown: 15
+  
+zieloni:
+
+  command: /dodajzieloni
+  type: RUN_COMMAND
+  runcmd:
+   - /team join Zieloni $arg1
+   - /lp user $arg1 parent set zieloni
+   - /title @a subtitle ["",{"text":"Witaj ","color":"green"},{"text":"$arg1 ","color":"gold"},{"text":"w drużynie zielonej!","color":"green"}]
+   - /title @a title ["",{"text":"ZIELONI","color":"green"}]  
+ 
+  
+  permission-required: true
+  
+  require_all_arguments: true
+  cooldown: 15
+  
+teleport:
+  command: /tepnij
+  type: RUN_AS_OPERATOR
+  cost: 100
+  success-message: "&aWysłano prośbę o teleportację do &e$arg1 - Kosztowało Cię to $100"
+  error-message: "&aPotrzebujesz &e$100 &aaby wysłać prośbę o teleportacje!"
+  runcmd:
+  - /tpask $arg1
+  permission-node: pm.teleport
+
+tpaa:
+  command: /tpa
+  type: ALIAS
+  alias: /tepnij
+
+bazaz:
+  command: /bazaz
+  type: RUN_AS_OPERATOR
+  cost: 50
+  success-message: "&aTrwa teleportacja do bazy - Kosztowało Cię to $50"
+  error-message: "&aPotrzebujesz &e$50 &aaby przeteleportować się do bazy!"
+  runcmd: 
+  - /warp bazazieloni
+  permission-node: pm.bziel
+
+bazac:
+  command: /bazac
+  type: RUN_AS_OPERATOR
+  cost: 50
+  success-message: "&aTrwa teleportacja do bazy - Kosztowało Cię to $50"
+  error-message: "&aPotrzebujesz &e$50 &aaby przeteleportować się do bazy!"
+  runcmd: 
+  - /warp bazaczerwoni
+  permission-node: pm.bczer
+  
+spawn:
+  command: /spawn
+  type: RUN_AS_OPERATOR
+  cost: 50
+  success-message: "&aTrwa teleportacja na spawn - Kosztowało Cię to $50"
+  error-message: "&aPotrzebujesz &e$50 &aaby przeteleportować się na spawn!"
+  runcmd:
+  - /warp spawn
+  permission-node: pm.spawn
+  
+newzadanie:
+
+  command: /nowezadanie
+  type: RUN_COMMAND
+  runcmd:
+   - /title @a subtitle ["",{"text":"$multiargs","color":"red"}] 
+   - /title @a title ["",{"text":"NOWE ZADANIE! ","color":"gold"}]
+   - /tab reload
+   
+   
+pluginy:
+  command: /pl
+  type: RUN_COMMAND
+  runcmd: 
+  - /bukkit:plugins
+  permission-node: pm.admin
+  permission-error: '&fPlugins (18): &aPM-MultiWersje&f, &aPM-Smok&f, &aPM-Mapa&f, &aPM-Tab&f, &aEssentials&f, &aPM-Banknoty&f, &aPM-Tabliczki&f, &aPM-Chowany&f, &aLogBlock&f, &aEpicWorldGenerator&f, &aLuckPerms&f, &aPM-BlokadaVillager&f, &aPM-LogoPrem&f, &aWorldEdit&f, &aWorldGuard&f, &aPM-Znaczniki&f, &aPM-Postacie&f, &aPM-Druzyny'
+  
+pluginy2:
+  command: /plugins
+  type: RUN_COMMAND
+  runcmd: 
+  - /bukkit:plugins
+  permission-node: pm.admin
+  permission-error: '&fPlugins (18): &aPM-MultiWersje&f, &aPM-Smok&f, &aPM-Mapa&f, &aPM-Tab&f, &aEssentials&f, &aPM-Banknoty&f, &aPM-Tabliczki&f, &aPM-Chowany&f, &aLogBlock&f, &aEpicWorldGenerator&f, &aLuckPerms&f, &aPM-BlokadaVillager&f, &aPM-LogoPrem&f, &aWorldEdit&f, &aWorldGuard&f, &aPM-Znaczniki&f, &aPM-Postacie&f, &aPM-Druzyny'
+  
+ogloszenie:
+
+  command: /ogloszenie
+  type: RUN_COMMAND
+  runcmd:
+   - /tm bc &4Ogłoszenie <nl>$multiargs
+   
+bc:
+  command: /bc
+  type: ALIAS
+  alias: /ogloszenie
+  
+info:
+  permission-node: psia.staty
+  permission-error: '&6&lPMKomendy > &4Brak Permisji'
+  command: /si
+  type: TEXT
+  text:
+   - '&c================&aINFORMACJE O TOBIE&c================'
+   - '&eTwój ping: &a%player_ping%'
+   - '&eTwój nick: &a%player_displayname%'
+   - '&eTwoje IP: &a%player_ip%'
+   - '&eTwoje UUID: &a%player_uuid%'
+   - '&eTwoje koordy: &a%player_x%&f/&a%player_y%&f/&a%player_z% &f(&eBIOM: &a%player_biome%&f)'
+   - '&eTryb gry: &a%player_gamemode%'
+   - '&eHP/Głód: &a%player_health%&f/&a%player_food_level%'
+   - '&eEXP: &a%player_total_exp%XP &f(&a%player_level% &eLVL&f)'
+   - '&bDo następnego poziomu potrzeba jeszcze: &a%player_exp_to_level%XP'
+   - ''
+   - '&c================&aINFORMACJE O SERWERZE&c================'
+   - '&eSerwer działa: &a%server_uptime%'
+   - '&eTPS Serwera: &a%server_tps%'
+   - '&eUżycie RAM: &a%server_ram_used%MB&f/&a%server_ram_max%MB &f(%server_ram_free%MB wolne)'
+   - '&eOsoby online: &a%server_online%&f/&a%server_max_players%'
+   - '&eWersja: &a%server_version%'
+   - '&eIP: &amc.psiamasakra.pl'
+   - '&eStrona WWW: &ahttps://psiamasakra.pl'
